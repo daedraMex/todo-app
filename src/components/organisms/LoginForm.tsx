@@ -1,12 +1,11 @@
 import { useState } from 'react';
-// import { useAuth } from '@/context/AuthContext';
-
+import { useAuthStore } from '@/store/use-auth-store';
 import { Button } from '@/components/ui/button';
 import { Mail, Lock, Loader2 } from 'lucide-react';
 import { FormField } from '@/components/molecules';
 
 export const LoginForm = () => {
-  // const { login, isLoading } = useAuth();
+  const { setAuth, isLoading } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,13 +17,13 @@ export const LoginForm = () => {
     if (!email.trim()) return setError('Ingresa tu correo electrónico');
     if (password.length < 6) return setError('La contraseña debe tener al menos 6 caracteres');
 
-    // const success = await login(email, password);
-    // if (!success) setError('Credenciales inválidas');
+    // Simular login exitoso (reemplaza con tu llamada API real)
+    setAuth({ id: 1, username: email.split('@')[0], email, role: 'user' }, 'fake-token-123');
   };
 
   return (
     <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
-      <h2 className="font-display text-xl font-semibold mb-6">Iniciar Sesión</h2>
+      <h2 className="font-display text-xl font-semibold mb-6 text-center">Iniciar Sesión</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <FormField 
           label="Correo electrónico" 
@@ -45,9 +44,9 @@ export const LoginForm = () => {
 
         {error && <p className="text-sm text-destructive animate-fade-in">{error}</p>}
 
-        {/* <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Ingresando...</> : 'Ingresar'}
-        </Button> */}
+        </Button>
       </form>
     </div>
   );

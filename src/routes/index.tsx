@@ -6,7 +6,6 @@ import { PublicRoute } from '@/components/auth/PublicRoute';
 
 export const router = createBrowserRouter([
   {
-    // Rutas protegidas por autenticación
     element: <ProtectedRoute />,
     children: [
       { path: '/tasks', element: <TasksPage /> },
@@ -14,7 +13,6 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    // Rutas públicas (Login/Registro)
     element: <PublicRoute />,
     children: [
       { path: '/login', element: <LoginPage /> },

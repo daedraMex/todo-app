@@ -1,14 +1,13 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes';
+import { AuthProvider } from './providers/auth-provider';
 
 function App() {
-
   return (
-    <>
-      <div className="flex min-h-svh flex-col items-center justify-center">
-    </div>
-    </>
-  )
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;

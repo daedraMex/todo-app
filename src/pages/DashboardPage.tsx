@@ -4,7 +4,7 @@ import { Header } from '@/components/organisms/Header';
 import { TaskBoard } from '@/components/organisms/TaskBoard';
 
 export default function DashboardPage() {
-  const { pendingTasks, completedTasks, isLoading } = useTasksDashboard();
+  const { pendingTasks, completedTasks, isLoading, handleToggleComplete, handleDelete } = useTasksDashboard();
 
   if (isLoading) return <div>Cargando Dashboard...</div>;
 
@@ -22,6 +22,8 @@ export default function DashboardPage() {
         <TaskBoard
           pendingTasks={pendingTasks}
           completedTasks={completedTasks}
+          onToggleComplete={handleToggleComplete}
+          onDelete={handleDelete}
         />
       }
     />

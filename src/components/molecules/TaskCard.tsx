@@ -1,15 +1,75 @@
-import type { Task } from '@/hooks/use-tasks'; 
-import { Card } from '@/components/ui/card'; 
-import { Badge } from '@/components/ui/badge'; 
+import type { TaskResponse } from '@/types/task';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { CheckCircle2, Trash2, Circle } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { es } from 'date-fns/locale';
 
-export const TaskCard = ({ task }: { task: Task }) => (
-  <Card className="p-4 hover:shadow-md transition-shadow">
-    <h4 className="font-medium text-foreground">{task.title}</h4>
-    <p className="text-sm text-muted-foreground line-clamp-2">{task.description}</p>
-    <div className="mt-2">
-      <Badge variant={task.is_completed ? "default" : "secondary"}>
-        {task.is_completed ? "Completada" : "Pendiente"}
-      </Badge>
-    </div>
-  </Card>
-);
+interface TaskCardProps {
+  task: TaskResponse;
+  onToggleComplete?: (taskId: number, isCompleted: boolean) => void;
+  onDelete?: (taskId: number) => void;
+}
+
+export const TaskCard = ({ task, onToggleComplete, onDelete }: TaskCardProps) => {
+  const timeAgo = formatDistanceToNow(new Date(task.created_at), {
+    addSuffix: true,
+    locale: es
+  });
+
+  return (
+    <Card className="group task-card-enter shadow-soft hover:shadow-card transition-all duration-300 border-border/50 overflow-hidden">
+      <div
+        className="h-1.5 w-full"
+        style={{ backgroundColor: task.color }}
+      />
+      <CardContent className="p-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <h3 className={`font-medium text-foreground leading-tight ${task.is_completed ? 'line-through opacity-60' : ''}`}>
+              {task.title}
+            </h3>
+            <div className="flex items-center gap-2 mt-3">
+              {task.categorie && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
+                  {task.categorie.name}
+                </span>
+              )}
+              <span className="text-xs text-muted-foreground">
+                {timeAgo}
+              </span>
+            </div>
+          </div>
+          {(onToggleComplete || onDelete) && (
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              {onToggleComplete && (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-9 w-9"
+                  onClick={() => onToggleComplete(task.id, !task.is_completed)}
+                >
+                  {task.is_completed ? (
+                    <Circle className="h-5 w-5 text-slate-400 hover:text-slate-600" />
+                  ) : (
+                    <CheckCircle2 className="h-5 w-5 text-green-500 hover:text-green-600" />
+                  )}
+                </Button>
+              )}
+              {onDelete && (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-9 w-9 hover:bg-red-50"
+                  onClick={() => onDelete(task.id)}
+                >
+                  <Trash2 className="h-5 w-5 text-red-500 hover:text-red-600" />
+                </Button>
+              )}
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};

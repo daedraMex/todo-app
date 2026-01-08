@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { LogOut, CheckSquare } from 'lucide-react';
 
 export function Header() {
-  const { user, logout } = useAuth();
+  const {  logout } = useAuth();
 
   return (
     <header className="bg-card border-b border-border">
@@ -15,16 +15,15 @@ export function Header() {
             <CheckSquare className="w-5 h-5 text-primary-foreground" />
           </div>
           <span className="font-display font-bold text-xl text-foreground">
-            TaskFlow
+            ToDoApp
           </span>
         </div>
 
-        {/* Actions */}
         <div className="flex items-center gap-4">
           <CreateTaskDialog />
           
           <span className="text-sm text-muted-foreground">
-            {user?.name}
+             John Doe
           </span>
           
           <Button 

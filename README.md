@@ -1,4 +1,4 @@
-# TODO Backend  
+# TODO FrontEnd 
 
 author : Erika F.
 
@@ -9,16 +9,25 @@ last update: 08- jan- 2026
 
 ## Tech
 
-- Python 3.11
-- FastAPI
-- Docker
-- PostgreSQL
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+- Axios
+- React Router DOM
 
 ## Docs
+
+- [Architecture](docs/architecture.md)
 
 ## System Requirements
 
 - [git](git) v2.13 or greater
+- [Node.js](nodejs) v18 or greater
+- [npm](npm) v6 or greater
+- [Vite](vite) v4 or greater
+
+
 
 ## Branches
 

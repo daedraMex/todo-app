@@ -1,30 +1,47 @@
 import { useState } from "react";
 import { Plus, Loader2 } from "lucide-react";
 import { useCreateTaskMutation } from "@/hooks/use-create-task";
+import { useCategories } from "@/hooks/useCategories";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/molecules/FormField";
-import { 
-  Dialog, DialogContent, DialogHeader, 
-  DialogTitle, DialogTrigger, DialogFooter 
+import {
+  Dialog, DialogContent, DialogHeader,
+  DialogTitle, DialogTrigger, DialogFooter
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export const CreateTaskDialog = () => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+
   const { mutate, isPending } = useCreateTaskMutation();
+  const { categories, isLoading: loadingCategories } = useCategories();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) return;
+    if (!title.trim() || !categoryId) return;
 
-    mutate({ title, description }, {
+    mutate({
+      title,
+      description: description.trim() || undefined,
+      category_id: categoryId,
+      status: 'pending'
+    }, {
       onSuccess: () => {
-        setOpen(false); // Cerramos el modal tras el éxito
+        setOpen(false);
         setTitle("");
         setDescription("");
+        setCategoryId(null);
       }
     });
   };
@@ -50,12 +67,13 @@ export const CreateTaskDialog = () => {
             value={title}
             onChange={(e: any) => setTitle(e.target.value)}
             disabled={isPending}
-            icon={() => null} // No requiere icono en este diseño
+            icon={() => null}
           />
-          
+
           <div className="space-y-2">
-            <label className="text-sm font-medium">Descripción</label>
+            <Label htmlFor="description">Descripción</Label>
             <Textarea
+              id="description"
               placeholder="Añade más detalles..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -64,8 +82,32 @@ export const CreateTaskDialog = () => {
             />
           </div>
 
+          <div className="space-y-2">
+            <Label htmlFor="category">Categoría *</Label>
+            <Select
+              value={categoryId?.toString()}
+              onValueChange={(value: string) => setCategoryId(Number(value))}
+              disabled={isPending || loadingCategories}
+            >
+              <SelectTrigger id="category">
+                <SelectValue placeholder="Selecciona una categoría" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.id.toString()}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           <DialogFooter>
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isPending || !categoryId}
+            >
               {isPending ? (
                 <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Creando...</>
               ) : (

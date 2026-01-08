@@ -7,16 +7,20 @@ export interface CategorieResponse {
 
 export interface TaskResponse {
   id: number;
+  color: string;
   title: string;
   description?: string;
   status: TaskStatus;
-  color: string;
   user_id: number;
-  categorie_id: number;
+  category_id: number;
   created_at: string;
   updated_at: string;
   is_completed: boolean;
   category?: CategorieResponse;
+}
+
+export interface CategorieListResponse {
+  categories: CategorieResponse[];
 }
 
 export interface PaginatedTaskResponse {

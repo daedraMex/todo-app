@@ -7,7 +7,7 @@ import { es } from 'date-fns/locale';
 
 interface TaskCardProps {
   task: TaskResponse;
-  onToggleComplete?: (taskId: number, isCompleted: boolean) => void;
+  onToggleComplete?: (taskId: number, is_completed: boolean) => void;
   onDelete?: (taskId: number) => void;
 }
 
@@ -16,17 +16,20 @@ export const TaskCard = ({ task, onToggleComplete, onDelete }: TaskCardProps) =>
     addSuffix: true,
     locale: es
   });
-  console.log(task)
+
+  const isCompleted = task.is_completed === true;
+  const taskColor = task.color
+
   return (
     <Card className="group task-card-enter shadow-soft hover:shadow-card transition-all duration-300 border-border/50 overflow-hidden">
       <div
         className="h-1.5 w-full"
-        style={{ backgroundColor: task.color }}
+        style={{ backgroundColor: taskColor }}
       />
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className={`font-medium text-foreground leading-tight ${task.is_completed ? 'line-through opacity-60' : ''}`}>
+            <h3 className={`font-medium text-foreground leading-tight ${isCompleted ? 'line-through opacity-60' : ''}`}>
               {task.title}
             </h3>
             <div className="flex items-center gap-2 mt-3">
@@ -47,9 +50,9 @@ export const TaskCard = ({ task, onToggleComplete, onDelete }: TaskCardProps) =>
                   size="icon"
                   variant="ghost"
                   className="h-9 w-9"
-                  onClick={() => onToggleComplete(task.id, !task.is_completed)}
+                  onClick={() => onToggleComplete(task.id, !isCompleted)}
                 >
-                  {task.is_completed ? (
+                  {isCompleted ? (
                     <Circle className="h-5 w-5 text-slate-400 hover:text-slate-600" />
                   ) : (
                     <CheckCircle2 className="h-5 w-5 text-green-500 hover:text-green-600" />

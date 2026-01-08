@@ -1,10 +1,10 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { TaskCard } from "@/components/molecules/TaskCard";
-import type{ Task } from "@/hooks/use-tasks";
 import { Sparkles } from "lucide-react";
+import type { TaskResponse } from "@/types/task";
 
 interface RecentTasksScrollProps {
-  tasks: Task[];
+  tasks: TaskResponse[];
 }
 
 export const RecentTasksScroll = ({ tasks }: RecentTasksScrollProps) => {

@@ -6,6 +6,8 @@ import { TaskBoard } from '@/components/organisms/TaskBoard';
 export default function DashboardPage() {
   const { pendingTasks, completedTasks, isLoading, handleToggleComplete, handleDelete } = useTasksDashboard();
 
+  console.log('DashboardPage - pendingTasks:', pendingTasks, 'completedTasks:', completedTasks);
+
   if (isLoading) return <div>Cargando Dashboard...</div>;
 
   return (

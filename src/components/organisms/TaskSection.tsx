@@ -1,10 +1,10 @@
-import type{ Task } from '@/hooks/use-tasks';
+import type { TaskResponse } from '@/types/task';
 import { TaskCard } from '@/components/molecules/TaskCard';
 import { EmptyState } from '@/components/molecules/EmptyState';
 
 interface TaskSectionProps {
   title: string;
-  tasks: Task[];
+  tasks: TaskResponse[];
   emptyMessage: string;
 }
 

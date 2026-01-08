@@ -3,17 +3,20 @@ import { useMemo } from 'react';
 import { taskService } from '@/services/task.service';
 import { useAuthStore } from '@/store/use-auth-store';
 import type { TaskResponse } from '@/types/task';
+import { CloudOff } from 'lucide-react';
 
 export const useTasksDashboard = () => {
   const token = useAuthStore((state) => state.token);
   const queryClient = useQueryClient();
 
-  const { data: tasks = [], isLoading } = useQuery({
+  const { data: tasks = [], isLoading, error } = useQuery({
     queryKey: ['tasks', 'dashboard'],
     queryFn: () => taskService.getDashboardTasks(token!),
     staleTime: 1000 * 60 * 5,
     enabled: !!token,
   });
+
+  console.log('useTasksDashboard - tasks:', tasks, 'isLoading:', isLoading, 'error:', error);
 
   const updateTaskMutation = useMutation({
     mutationFn: ({ taskId, updatedTask }: { taskId: number; updatedTask: TaskResponse }) =>
@@ -31,7 +34,7 @@ export const useTasksDashboard = () => {
   });
 
   const pendingTasks = useMemo(() =>
-    tasks?.filter(t => t.is_completed === false) || [], [tasks]
+    tasks?.filter(t => t.is_completed === false ) || [], [tasks]
   );
 
   const completedTasks = useMemo(() =>
@@ -39,13 +42,14 @@ export const useTasksDashboard = () => {
   );
 
   const handleToggleComplete = (taskId: number, isCompleted: boolean) => {
+    console.log(isCompleted)
     const task = tasks.find(t => t.id === taskId);
     if (!task) return;
 
     const updatedTask: TaskResponse = {
       ...task,
       is_completed: isCompleted
-    };
+    }
 
     updateTaskMutation.mutate({ taskId, updatedTask });
   };

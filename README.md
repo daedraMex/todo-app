@@ -48,7 +48,7 @@ Then, open the `.env` file and set the appropriate values for each variable acco
 
 | Variable | Description | Example Value |
 |----------|-------------|----------------|
-| VITE_API_URL | The URL of the API server | <http://localhost:8000> |
+| VITE_API_URL | The URL of the API server | <http://localhost:8000/api/v1> |
 
 1. If is your first tme running the app
 

@@ -7,7 +7,7 @@ export const useCreateTaskMutation = () => {
   const token = useAuthStore((state) => state.token);
 
   return useMutation({
-    mutationFn: (newTask: { title: string; description?: string; category_id: number; status?: string }) =>
+    mutationFn: (newTask: { title: string; description?: string; category_id: number; is_completed?: boolean }) =>
       taskService.create(newTask, token!),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });

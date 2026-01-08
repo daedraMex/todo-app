@@ -10,14 +10,14 @@ export const taskService = {
     });
     return data.categories;
   },
-  create: async (task: { title: string; description?: string; category_id: number; status?: string }, token: string): Promise<TaskResponse> => {
+  create: async (task: { title: string; description?: string; category_id: number; is_completed?: boolean }, token: string): Promise<TaskResponse> => {
     const { data } = await api.post<TaskResponse>(
       '/tasks',
       {
         title: task.title,
         description: task.description || null,
         category_id: task.category_id,
-        status: task.status || 'pending'
+        is_completed: task.is_completed
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );

@@ -35,7 +35,7 @@ export const CreateTaskDialog = () => {
       title,
       description: description.trim() || undefined,
       category_id: categoryId,
-      status: 'pending'
+      is_completed: false
     }, {
       onSuccess: () => {
         setOpen(false);

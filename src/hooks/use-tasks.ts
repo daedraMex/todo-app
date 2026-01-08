@@ -1,8 +1,8 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '@/store/use-auth-store';
 
-// Interfaz sincronizada con tu modelo de FastAPI
 export interface Task {
+  created_at: string | number | Date;
   id: number;
   title: string;
   description?: string;
@@ -12,7 +12,6 @@ export interface Task {
 export const useTasks = () => {
   const token = useAuthStore((state) => state.token);
 
-  // Query para obtener tareas
   const tasksQuery = useQuery({
     queryKey: ['tasks'],
     queryFn: async (): Promise<Task[]> => {
@@ -22,7 +21,8 @@ export const useTasks = () => {
       if (!response.ok) throw new Error('Network error');
       return response.json();
     },
-    enabled: !!token, // Solo se ejecuta si hay un token
+    //Sie ncuentra un token, se dispatch
+    enabled: !!token, 
   });
 
   return { tasksQuery };

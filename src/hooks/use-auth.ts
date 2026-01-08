@@ -22,3 +22,7 @@ export const useLoginMutation = () => {
     }
   });
 };
+export const useAuth = () => {
+  const { user, isAuthenticated, logout, isLoading } = useAuthStore();
+  return { user, isAuthenticated, logout, isLoading };
+};

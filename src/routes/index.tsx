@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LoginPage from '@/pages/LoginPage';
-import TasksPage from '@/pages/TasksPage';
+import DashboardPage from '@/pages/DashboardPage';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { PublicRoute } from '@/components/auth/PublicRoute';
 
@@ -8,8 +8,8 @@ export const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
-      { path: '/tasks', element: <TasksPage /> },
-      { path: '/', element: <TasksPage /> },
+      { path: '/tasks', element: <DashboardPage /> },
+      { path: '/', element: <DashboardPage /> },
     ],
   },
   {

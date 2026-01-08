@@ -25,6 +25,11 @@ The application is organized into the following main directories:
 
 ## 
 Component Hierarchy
-![login components](./img/login-Components.png)
-![dashboard components](./img/dashboard.png)
-![card components](./img/card.png)
+### login components
+<img src="./img/login-Components.png" alt="Alt text" width="500" height="300">
+
+### dashboard components
+<img src="./img/dashboard.png" alt="Alt text" width="500" height="300">
+
+### card components
+<img src="./img/card.png" alt="Alt text" width="200" height="100">

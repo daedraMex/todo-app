@@ -3,14 +3,12 @@ export type TaskStatus = 'pending' | 'completed';
 export interface CategorieResponse {
   id: number;
   name: string;
-  user_id: number;
-  created_at: string;
-  updated_at: string;
 }
 
 export interface TaskResponse {
   id: number;
   title: string;
+  description?: string;
   status: TaskStatus;
   color: string;
   user_id: number;
@@ -18,7 +16,7 @@ export interface TaskResponse {
   created_at: string;
   updated_at: string;
   is_completed: boolean;
-  categorie?: CategorieResponse; 
+  category?: CategorieResponse;
 }
 
 export interface PaginatedTaskResponse {

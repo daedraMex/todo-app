@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { taskService } from '@/services/task.service';
 import { useAuthStore } from '@/store/use-auth-store';
+import type { TaskResponse } from '@/types/task';
 
 export const useTasksDashboard = () => {
   const token = useAuthStore((state) => state.token);
@@ -14,9 +15,9 @@ export const useTasksDashboard = () => {
     enabled: !!token,
   });
 
-  const toggleCompleteMutation = useMutation({
-    mutationFn: ({ taskId, isCompleted }: { taskId: number; isCompleted: boolean }) =>
-      taskService.toggleComplete(taskId, isCompleted, token!),
+  const updateTaskMutation = useMutation({
+    mutationFn: ({ taskId, updatedTask }: { taskId: number; updatedTask: TaskResponse }) =>
+      taskService.update(taskId, updatedTask, token!),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks', 'dashboard'] });
     },
@@ -38,7 +39,15 @@ export const useTasksDashboard = () => {
   );
 
   const handleToggleComplete = (taskId: number, isCompleted: boolean) => {
-    toggleCompleteMutation.mutate({ taskId, isCompleted });
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    const updatedTask: TaskResponse = {
+      ...task,
+      is_completed: isCompleted
+    };
+
+    updateTaskMutation.mutate({ taskId, updatedTask });
   };
 
   const handleDelete = (taskId: number) => {

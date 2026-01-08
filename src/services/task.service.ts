@@ -25,10 +25,16 @@ export const taskService = {
     });
     return data.tasks;
   },
-  toggleComplete: async (taskId: number, isCompleted: boolean, token: string): Promise<TaskResponse> => {
-    const { data } = await api.patch<TaskResponse>(
+  update: async (taskId: number, task: TaskResponse, token: string): Promise<TaskResponse> => {
+    const { data } = await api.put<TaskResponse>(
       `/tasks/${taskId}`,
-      { is_completed: isCompleted },
+      {
+        title: task.title,
+        description: task.description || '',
+        is_completed: task.is_completed,
+        color: task.color,
+        categorie_id: task.categorie_id
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`

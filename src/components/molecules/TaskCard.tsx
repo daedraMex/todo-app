@@ -12,11 +12,11 @@ interface TaskCardProps {
 }
 
 export const TaskCard = ({ task, onToggleComplete, onDelete }: TaskCardProps) => {
-  const timeAgo = formatDistanceToNow(new Date(task.created_at), {
+  const timeAgo = formatDistanceToNow(new Date(task.updated_at), {
     addSuffix: true,
     locale: es
   });
-
+  console.log(task)
   return (
     <Card className="group task-card-enter shadow-soft hover:shadow-card transition-all duration-300 border-border/50 overflow-hidden">
       <div
@@ -30,9 +30,9 @@ export const TaskCard = ({ task, onToggleComplete, onDelete }: TaskCardProps) =>
               {task.title}
             </h3>
             <div className="flex items-center gap-2 mt-3">
-              {task.categorie && (
+              {task.category && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
-                  {task.categorie.name}
+                  {task.category.name}
                 </span>
               )}
               <span className="text-xs text-muted-foreground">

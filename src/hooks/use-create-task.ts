@@ -10,7 +10,6 @@ export const useCreateTaskMutation = () => {
     mutationFn: (newTask: { title: string; description: string }) => 
       taskService.create(newTask, token!),
     onSuccess: () => {
-      // Invalidamos el caché para refrescar la lista de tareas instantáneamente
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });

@@ -1,9 +1,9 @@
 interface DashboardTemplateProps {
   header: React.ReactNode;
-  recentTasks: React.ReactNode;
   welcomeMessage: React.ReactNode;
-  pendingSection: React.ReactNode;
-  completedSection: React.ReactNode;
+  tasksList: React.ReactNode;
+  recentTasks: React.ReactNode | null;
+
 }
 
 export const DashboardTemplate = (props: DashboardTemplateProps) => (
@@ -14,8 +14,7 @@ export const DashboardTemplate = (props: DashboardTemplateProps) => (
         {props.recentTasks}
         {props.welcomeMessage}
         <div className="grid gap-8 lg:grid-cols-2">
-          {props.pendingSection}
-          {props.completedSection}
+          {props.tasksList}
         </div>
       </div>
     </main>
